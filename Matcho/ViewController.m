@@ -15,10 +15,17 @@
 
 @property (nonatomic, strong) Game *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (nonatomic) int scoreCount;
 
 @end
 
 @implementation ViewController
+
+- (void) setScoreCount:(int)scoreCount {
+    _scoreCount = scoreCount;
+    self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.scoreCount];
+}
 
 - (Game *)game {
 	if (!_game) {
@@ -34,6 +41,7 @@
 	[self.game chooseCardAtIndex:cardIndex];
 	
 	[self updateUI];
+    self.scoreCount = [self.game score];
 }
 
 
