@@ -17,8 +17,9 @@
 
 - (void)chooseCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
-- (NSString*) gameLog:(NSInteger)forCardIndex;
+//- (NSString*) gameLog:(NSInteger)forCardIndex;
 
 @property (nonatomic, readonly) NSInteger score;
+@property (nonatomic, readonly) NSString *logScore;
 
 @end

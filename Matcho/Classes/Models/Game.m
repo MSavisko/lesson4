@@ -12,6 +12,7 @@
 
 @property (nonatomic, readwrite) NSInteger score;
 @property (nonatomic, strong) NSMutableArray *cards;
+@property (nonatomic, strong, readwrite) NSString *logScore;
 
 @end
 
@@ -57,6 +58,7 @@ static const int COST_TO_CHOOSE = 1;
 	if (!card.isMatched) {
 		if (card.isChosen) {
 			card.chosen = NO;
+            self.logScore = [NSString stringWithFormat:@"Card %@ is closed, the score not changed", card.contents];
 		} else {
 			NSMutableArray *chosenCards = [[NSMutableArray alloc] init];
 			
@@ -75,6 +77,7 @@ static const int COST_TO_CHOOSE = 1;
 					card.matched = YES;
 					for (Card *otherCard in chosenCards) {
 						otherCard.matched = YES;
+                        self.logScore = [NSString stringWithFormat:@"Cards %@ and %@ is matched, you take %d points", card.contents, otherCard.contents, matchScore * MATCH_BONUS];
 					}
 				} else {
 					int penalty = MISMATCH_PENALTY;
@@ -84,29 +87,17 @@ static const int COST_TO_CHOOSE = 1;
 					card.chosen = YES;
 					for (Card *otherCard in chosenCards) {
 						otherCard.chosen = NO;
+                        self.logScore = [NSString stringWithFormat:@"Cards %@ and %@ is NOT matched, you lost %d points", card.contents, otherCard.contents, MISMATCH_PENALTY];
 					}
 				}
 			} else {
 				self.score -= COST_TO_CHOOSE;
 				card.chosen = YES;
+                self.logScore = [NSString stringWithFormat:@"Card %@ is open, you lost %d points", card.contents, COST_TO_CHOOSE];
 			}
 		}
 	}
     
-}
-
-- (NSString*)gameLog:(NSInteger)forCardIndex{
-    Card *card = [self cardAtIndex:forCardIndex];
-    if (card.isChosen == YES && card.isMatched == YES) {
-        return [NSString stringWithFormat:@"Cards is matched, you take %d points", MATCH_BONUS];
-    } if (card.isChosen == YES && card.isMatched == YES) {
-        return [NSString stringWithFormat:@"Cards is NOT matched, you lost %d points", MISMATCH_PENALTY];
-    } if (card.isChosen == YES) {
-        return [NSString stringWithFormat:@"Card %@ is open, you lost %d points", card.contents, COST_TO_CHOOSE];
-    } if (card.isChosen == NO) {
-        return [NSString stringWithFormat:@"Card %@ is closed, the score not changed", card.contents];
-    }
-    return [NSString stringWithFormat:@"Card is NOT choosen"];
 }
 
 

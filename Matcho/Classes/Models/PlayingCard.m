@@ -57,7 +57,15 @@
 
 -(int) match:(NSArray *)otherCards {
 	PlayingCard *card = [otherCards firstObject];
-	
+    if (self.rank == card.rank &&
+                                ([card.contents hasSuffix:@"♣"] || [card.contents hasSuffix:@"♠"])) {
+        return 6;
+    }
+    if (self.rank == card.rank &&
+        ([card.contents hasSuffix:@"♦"] || [card.contents hasSuffix:@"♥"])) {
+        return 6;
+    }
+    
 	if ([self.suit isEqualToString:card.suit]) {
 		return 1;
 	}
