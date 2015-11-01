@@ -10,7 +10,6 @@
 
 #import "Deck.h"
 
-
 @interface Game : UIView
 
 - (instancetype)initWithCardCount:(NSUInteger)count
@@ -18,6 +17,7 @@
 
 - (void)chooseCardAtIndex:(NSUInteger)index;
 - (Card *)cardAtIndex:(NSUInteger)index;
+- (NSString*) gameLog:(NSInteger)forCardIndex;
 
 @property (nonatomic, readonly) NSInteger score;
 

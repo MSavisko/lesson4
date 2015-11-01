@@ -92,6 +92,21 @@ static const int COST_TO_CHOOSE = 1;
 			}
 		}
 	}
+    
+}
+
+- (NSString*)gameLog:(NSInteger)forCardIndex{
+    Card *card = [self cardAtIndex:forCardIndex];
+    if (card.isChosen == YES && card.isMatched == YES) {
+        return [NSString stringWithFormat:@"Cards is matched, you take %d points", MATCH_BONUS];
+    } if (card.isChosen == YES && card.isMatched == YES) {
+        return [NSString stringWithFormat:@"Cards is NOT matched, you lost %d points", MISMATCH_PENALTY];
+    } if (card.isChosen == YES) {
+        return [NSString stringWithFormat:@"Card %@ is open, you lost %d points", card.contents, COST_TO_CHOOSE];
+    } if (card.isChosen == NO) {
+        return [NSString stringWithFormat:@"Card %@ is closed, the score not changed", card.contents];
+    }
+    return [NSString stringWithFormat:@"Card is NOT choosen"];
 }
 
 

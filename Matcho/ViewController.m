@@ -8,7 +8,6 @@
 
 #import "Game.h"
 #import "PlayingCardDeck.h"
-
 #import "ViewController.h"
 
 @interface ViewController ()
@@ -16,7 +15,9 @@
 @property (nonatomic, strong) Game *game;
 @property (strong, nonatomic) IBOutletCollection(UIButton) NSArray *cardButtons;
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UILabel *logLabel;
 @property (nonatomic) int scoreCount;
+@property (nonatomic) NSString* logLabelCount;
 
 @end
 
@@ -26,6 +27,7 @@
     _scoreCount = scoreCount;
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.scoreCount];
 }
+
 
 - (Game *)game {
 	if (!_game) {
@@ -39,7 +41,7 @@
 - (IBAction)cardButtonTapped:(UIButton *)sender {
 	NSUInteger cardIndex = [self.cardButtons indexOfObject:sender];
 	[self.game chooseCardAtIndex:cardIndex];
-	
+    self.logLabel.text = [self.game gameLog:cardIndex];
 	[self updateUI];
     self.scoreCount = [self.game score];
 }
