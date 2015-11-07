@@ -27,7 +27,6 @@
     self.scoreLabel.text = [NSString stringWithFormat:@"Score: %d", self.scoreCount];
 }
 
-
 - (Game *)game {
 	if (!_game) {
 		_game = [[Game alloc] initWithCardCount:[self.cardButtons count]
@@ -54,7 +53,10 @@
 		[cardButton setTitle:[self titleForCard:card] forState:UIControlStateNormal];
 		[cardButton setBackgroundImage:[self backgroundImageForCard:card]
 							  forState:UIControlStateNormal];
-		cardButton.enabled = !card.isMatched;
+        cardButton.enabled = !card.isMatched && ![self.game everyMatchIsDone];
+        if (!cardButton.enabled) {
+            self.logLabel.text = [NSString stringWithFormat:@"Game is Over!"];
+        }
 	}
 }
 
